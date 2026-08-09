@@ -1,0 +1,188 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width,initial-scale=1,viewport-fit=cover">
+<title>Tota — Together Forever 🫶</title>
+<meta name="theme-color" content="#ffd9e7">
+<style>
+:root{
+  --pink:#f7a6c2; --pink2:#ffdce9; --deep:#a83d62; --green:#72d3a4;
+  --paper:#fff8fb; --shadow:0 18px 50px rgba(145,61,91,.16);
+}
+*{box-sizing:border-box}
+html,body{margin:0;min-height:100%;font-family:system-ui,-apple-system,Segoe UI,Roboto,Arial,sans-serif;background:#ffdfea;color:#8f3d5d}
+body{overflow-x:hidden}
+button{font:inherit;border:0;cursor:pointer}
+.screen{min-height:100svh;display:none;place-items:center;padding:28px 18px;position:relative;overflow:hidden}
+.screen.active{display:grid}
+.bg-heart{position:absolute;inset:-30%;pointer-events:none;opacity:.22;background:
+ radial-gradient(circle at 20% 20%,#fff 0 4px,transparent 5px),
+ radial-gradient(circle at 70% 30%,#fff 0 3px,transparent 4px),
+ radial-gradient(circle at 40% 80%,#fff 0 5px,transparent 6px);
+ background-size:120px 120px,150px 150px,180px 180px;animation:floatbg 12s linear infinite}
+@keyframes floatbg{to{transform:translateY(-70px) rotate(3deg)}}
+.card{width:min(920px,100%);background:rgba(255,248,251,.78);backdrop-filter:blur(12px);border:1px solid rgba(255,255,255,.8);border-radius:30px;box-shadow:var(--shadow);padding:28px}
+.center{text-align:center}
+.kitty{font-size:78px;line-height:1;animation:bob 2s ease-in-out infinite}
+@keyframes bob{50%{transform:translateY(-8px)}}
+.title{font-size:clamp(26px,7vw,48px);margin:14px 0 8px;color:#a33f62;font-weight:900}
+.subtitle{font-size:16px;opacity:.78;margin-bottom:24px}
+.actions{display:flex;gap:14px;justify-content:center;align-items:center;flex-wrap:wrap}
+.yes,.no{min-width:150px;padding:17px 30px;border-radius:18px;font-weight:900;font-size:22px;transition:.25s}
+.yes{background:var(--green);color:#fff;box-shadow:0 12px 28px rgba(76,170,128,.25)}
+.no{background:#ef6e8f;color:#fff;position:relative}
+.yes:hover{transform:scale(1.04)}
+.no{transition:left .16s ease,top .16s ease,transform .16s ease}
+.together{font-size:clamp(32px,8vw,70px);font-weight:1000;color:#a33f62;text-shadow:0 6px 20px rgba(163,63,98,.13)}
+.sparkles{font-size:34px;letter-spacing:8px;animation:pulse 1.2s infinite alternate}
+@keyframes pulse{to{transform:scale(1.12);opacity:.65}}
+.section-title{font-size:clamp(25px,6vw,40px);margin:0 0 18px;text-align:center;color:#a33f62}
+.memories{display:grid;grid-template-columns:repeat(2,minmax(0,1fr));gap:18px}
+.polaroid{background:#fff;padding:10px 10px 22px;box-shadow:0 12px 28px rgba(80,40,60,.16);transform:rotate(var(--r));transition:.35s}
+.polaroid:hover{transform:rotate(0) translateY(-6px) scale(1.02)}
+.polaroid img{width:100%;aspect-ratio:4/5;object-fit:cover;border-radius:4px;display:block}
+.caption{text-align:center;font-weight:800;margin-top:10px;color:#9a4a68}
+.songbox{display:grid;grid-template-columns:170px 1fr;gap:24px;align-items:center}
+.record-wrap{display:grid;place-items:center}
+.record{width:150px;height:150px;border-radius:50%;background:
+radial-gradient(circle,#f07aa3 0 18px,#f7a6c2 19px 24px,#222 25px 31px,#111 32px 45px,#222 46px 60px,#111 61px 75px);
+box-shadow:0 15px 35px rgba(0,0,0,.2);animation:spin 6s linear infinite;animation-play-state:paused}
+.record.playing{animation-play-state:running}
+@keyframes spin{to{transform:rotate(360deg)}}
+.song-title{font-size:25px;font-weight:900;margin-bottom:8px}
+.song-sub{opacity:.75;margin-bottom:18px}
+.player{width:100%}
+.player button{background:#f08aae;color:#fff;border-radius:14px;padding:12px 20px;font-weight:900}
+.gifts{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.gift{background:linear-gradient(145deg,#ffd1e0,#f6a9c4);border-radius:22px;padding:22px 12px;box-shadow:0 12px 28px rgba(145,61,91,.14);text-align:center;transition:.25s}
+.gift:hover{transform:translateY(-7px)}
+.gift-icon{font-size:58px}
+.gift b{display:block;margin-top:8px}
+.gift-msg{margin-top:16px;min-height:48px;font-weight:800}
+.final-note{background:#fffdfd;border-radius:8px;padding:34px 26px;box-shadow:0 18px 45px rgba(80,40,60,.18);max-width:720px;margin:auto;position:relative}
+.final-note:before{content:"💗";position:absolute;left:18px;top:14px;font-size:22px}
+.final-note p{font-size:clamp(20px,4vw,30px);line-height:1.55;margin:18px 0;color:#7d3c55}
+.next{display:block;margin:22px auto 0;background:#a83d62;color:#fff;border-radius:16px;padding:13px 24px;font-weight:900}
+.progress{position:fixed;left:14px;right:14px;bottom:12px;height:5px;background:rgba(255,255,255,.55);border-radius:99px;z-index:20}
+.progress i{display:block;height:100%;width:0;background:#a83d62;border-radius:99px;transition:.35s}
+.toast{position:fixed;top:16px;left:50%;transform:translateX(-50%) translateY(-20px);background:#fff;color:#a33f62;padding:12px 18px;border-radius:999px;box-shadow:var(--shadow);opacity:0;pointer-events:none;transition:.3s;z-index:50;font-weight:800}
+.toast.show{opacity:1;transform:translateX(-50%) translateY(0)}
+.celebrate{position:fixed;inset:0;pointer-events:none;z-index:80;overflow:hidden}
+.celebrate span{position:absolute;font-size:24px;animation:fall 1.9s cubic-bezier(.18,.72,.25,1) forwards}
+@keyframes fall{
+  0%{transform:translate(-50%,-50%) scale(.2) rotate(0);opacity:0}
+  12%{opacity:1;transform:translate(-50%,-50%) scale(1.4) rotate(30deg)}
+  100%{transform:translate(calc(-50% + var(--dx)),calc(-50% + var(--dy))) scale(.75) rotate(var(--rot));opacity:0}
+}
+.screen.active .card{animation:cardIn .65s cubic-bezier(.2,.8,.2,1)}
+@keyframes cardIn{from{opacity:0;transform:translateY(22px) scale(.97)}to{opacity:1;transform:none}}
+#lock{position:fixed;inset:0;background:#ffdfea;display:grid;place-items:center;z-index:100;padding:20px}
+.lockbox{width:min(430px,100%);background:#fff8fb;padding:28px;border-radius:28px;box-shadow:var(--shadow);text-align:center}
+.lockbox input{width:100%;padding:14px;border:2px solid #f4bfd0;border-radius:14px;outline:none;margin:12px 0}
+.lockbox .enter{width:100%;background:#a83d62;color:#fff;padding:14px;border-radius:14px;font-weight:900}
+.err{color:#d54f70;min-height:22px}
+@media(max-width:650px){
+ .card{padding:20px 14px;border-radius:24px}
+ .memories{grid-template-columns:1fr}
+ .songbox{grid-template-columns:1fr;text-align:center}
+ .gifts{grid-template-columns:1fr}
+ .record{width:130px;height:130px}
+}
+</style>
+</head>
+<body>
+<div id="lock">
+  <div class="lockbox">
+    <div class="kitty">💗</div>
+    <h2>Only for Tota</h2>
+    <p>This little place was made especially for you 🫶</p>
+    <input id="code" type="password" placeholder="Enter the secret code" autocomplete="off">
+    <button class="enter" id="enter">Open my surprise</button>
+    <div class="err" id="err"></div>
+    <small>Tip: the code can be changed in <b>script.js</b>.</small>
+  </div>
+</div>
+
+<div class="toast" id="toast"></div>
+
+<section class="screen active" id="s0">
+  <div class="bg-heart"></div>
+  <div class="card center">
+    <div class="kitty">🐱</div>
+    <div class="title">Tota, be serious...</div>
+    <div class="subtitle">I have one very important question for you 🫶</div>
+    <div class="actions">
+      <button class="yes" onclick="go(1)">YES</button>
+      <button class="no" id="noBtn">NO</button>
+    </div>
+  </div>
+</section>
+
+<section class="screen" id="s1">
+ <div class="card center">
+   <div class="sparkles">♡ ♥ ♡</div>
+   <div class="together">Together forever🫶</div>
+   <p class="subtitle">Tota, this little story is ours.</p>
+   <button class="next" onclick="go(2)">Continue ❤️</button>
+ </div>
+</section>
+
+<section class="screen" id="s2">
+ <div class="card">
+   <h2 class="section-title">Our beautiful memories 📸</h2>
+   <div class="memories">
+     <div class="polaroid" style="--r:-2deg"><img src="assets/memory1.jpg"><div class="caption">A memory I keep forever 🫶</div></div>
+     <div class="polaroid" style="--r:2deg"><img src="assets/memory2.jpg"><div class="caption">Us ❤️</div></div>
+     <div class="polaroid" style="--r:1deg"><img src="assets/memory3.jpg"><div class="caption">One more beautiful moment</div></div>
+     <div class="polaroid" style="--r:-3deg"><img src="assets/memory4.jpg"><div class="caption">My favorite kind of chaos 😂❤️</div></div>
+   </div>
+   <button class="next" onclick="go(3)">Next 💗</button>
+ </div>
+</section>
+
+<section class="screen" id="s3">
+ <div class="card">
+   <h2 class="section-title">A song that reminds me of us 🎵</h2>
+   <div class="songbox">
+     <div class="record-wrap"><div class="record" id="record"></div></div>
+     <div>
+       <div class="song-title">محتاج لوجودك</div>
+       <div class="song-sub">محمد سعيد — our song 🫶</div>
+       <audio class="player" id="audio" src="assets/song.m4a" controls></audio>
+       <div style="margin-top:12px"><button onclick="toggleSong()">Play / Pause 🎶</button></div>
+     </div>
+   </div>
+   <button class="next" onclick="go(4)">Next 💗</button>
+ </div>
+</section>
+
+<section class="screen" id="s4">
+ <div class="card center">
+   <h2 class="section-title">I knew you'd say yes 💕</h2>
+   <div style="font-size:84px;animation:bob 2s ease-in-out infinite">🥰</div>
+   <div class="gifts">
+    <div class="gift" onclick="gift(1)"><div class="gift-icon">🎁</div><b>GIFT 1</b><div class="gift-msg" id="g1"></div></div>
+    <div class="gift" onclick="gift(2)"><div class="gift-icon">🎁</div><b>GIFT 2</b><div class="gift-msg" id="g2"></div></div>
+    <div class="gift" onclick="gift(3)"><div class="gift-icon">🎁</div><b>GIFT 3</b><div class="gift-msg" id="g3"></div></div>
+   </div>
+   <button class="next" onclick="go(5)">One last thing 💌</button>
+ </div>
+</section>
+
+<section class="screen" id="s5">
+ <div class="card center">
+   <div class="sparkles">💗 💕 💗</div>
+   <h2 class="section-title">For Tota</h2>
+   <div class="final-note">
+    <p>I hope we continue our story with beautiful memories, bring it to a happy conclusion, never get upset with each other, and overcome the hard times together🫶</p>
+   </div>
+   <div class="together" style="font-size:clamp(28px,7vw,52px);margin-top:22px">Together forever🫶</div>
+ </div>
+</section>
+
+<div class="progress"><i id="bar"></i></div>
+
+<script src="script.js"></script>
+</body>
+</html>
